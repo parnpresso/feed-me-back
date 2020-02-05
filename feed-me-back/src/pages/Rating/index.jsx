@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
+import ActiveAngryFace from './images/active-angry-face.png';
+import ActiveSadFace from './images/active-sad-face.png';
+import ActiveSoSoFace from './images/active-so-so-face.png';
+import ActiveHappyFace from './images/active-happy-face.png';
+import ActiveEnjoyFace from './images/active-enjoy-face.png';
 import AngryFace from './images/angry-face.png';
 import SadFace from './images/sad-face.png';
 import SoSoFace from './images/so-so-face.png';
@@ -27,6 +32,7 @@ const Title = styled.h1`
 
 const Image = styled.img`
   width: 40px;
+  height: 40px;
 `;
 
 const Button = styled.button`
@@ -62,11 +68,11 @@ const RatingPage = (firebase) => {
       <Title>Teamwork</Title>
 
       <EmojiRating>
-        <Image src={AngryFace} onClick={() => setRating(1)}></Image>
-        <Image src={SadFace} onClick={() => setRating(2)}></Image>
-        <Image src={SoSoFace} onClick={() => setRating(3)}></Image>
-        <Image src={HappyFace} onClick={() => setRating(4)}></Image>
-        <Image src={EnjoyFace} onClick={() => setRating(5)}></Image>
+        <Image src={rating === 1 ? ActiveAngryFace : AngryFace} onClick={() => setRating(1)}></Image>
+        <Image src={rating === 2 ? ActiveSadFace : SadFace} onClick={() => setRating(2)}></Image>
+        <Image src={rating === 3 ? ActiveSoSoFace : SoSoFace} onClick={() => setRating(3)}></Image>
+        <Image src={rating === 4 ? ActiveHappyFace : HappyFace} onClick={() => setRating(4)}></Image>
+        <Image src={rating === 5 ? ActiveEnjoyFace : EnjoyFace} onClick={() => setRating(5)}></Image>
       </EmojiRating>
 
       <Button onClick={() => goToHomePage()}>Back</Button>
