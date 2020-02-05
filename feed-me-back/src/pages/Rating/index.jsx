@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -7,6 +7,7 @@ import ActiveSadFace from './images/active-sad-face.png';
 import ActiveSoSoFace from './images/active-so-so-face.png';
 import ActiveHappyFace from './images/active-happy-face.png';
 import ActiveEnjoyFace from './images/active-enjoy-face.png';
+import AnimateAngryFace from './animations/angry-face.gif';
 import AngryFace from './images/angry-face.png';
 import SadFace from './images/sad-face.png';
 import SoSoFace from './images/so-so-face.png';
@@ -49,6 +50,12 @@ const Button = styled.button`
 const RatingPage = (firebase) => {
   const history = useHistory();
   const [rating, setRating] = useState(0);
+  const [isAnimate, setIsAnimate] = useState(false);
+
+  useEffect(() => {
+    setIsAnimate(true);
+    setTimeout(() => {setIsAnimate(false)}, 3000);
+  }, [rating]);
 
   const goToHomePage = () => history.push("/");
   const goToSuccessPage = () => history.push("/success");
@@ -61,14 +68,26 @@ const RatingPage = (firebase) => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+
+  const getAngryFace = () => {
+    if (rating === 1 && isAnimate) {
+      return AnimateAngryFace;
+    }
+
+    if (rating === 1) {
+      return ActiveAngryFace;
+    }
+
+    return AngryFace;
+  };
 
   return (
     <Container>
       <Title>Teamwork</Title>
 
       <EmojiRating>
-        <Image src={rating === 1 ? ActiveAngryFace : AngryFace} onClick={() => setRating(1)}></Image>
+        <Image src={getAngryFace()} onClick={() => setRating(1)}></Image>
         <Image src={rating === 2 ? ActiveSadFace : SadFace} onClick={() => setRating(2)}></Image>
         <Image src={rating === 3 ? ActiveSoSoFace : SoSoFace} onClick={() => setRating(3)}></Image>
         <Image src={rating === 4 ? ActiveHappyFace : HappyFace} onClick={() => setRating(4)}></Image>
