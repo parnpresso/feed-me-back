@@ -1,10 +1,50 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+
+import AngryFace from './images/angry-face.png';
+import SadFace from './images/sad-face.png';
+import SoSoFace from './images/so-so-face.png';
+import HappyFace from './images/happy-face.png';
+import EnjoyFace from './images/enjoy-face.png';
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f8f8;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+`;
+
+const EmojiRating = styled.div`
+  display: flex;
+`;
+
+const Title = styled.h1`
+  font-size: 1.8em;
+`;
+
+const Image = styled.img`
+  width: 40px;
+`;
+
+const Button = styled.button`
+  padding: 0.5em 4em 0.5em 4em;
+  border: none;
+  border-radius: 0.3em;
+  background: #FED462;
+  font-size: 1.2em;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #202020;
+`;
 
 const RatingPage = (firebase) => {
   const history = useHistory();
   const [rating, setRating] = useState(0);
 
+  const goToHomePage = () => history.push("/");
   const goToSuccessPage = () => history.push("/success");
 
   const updateRating = (rating) => {
@@ -18,17 +58,20 @@ const RatingPage = (firebase) => {
   }
 
   return (
-    <div>
-      <h1>Teamwork</h1>
+    <Container>
+      <Title>Teamwork</Title>
 
-      <div onClick={() => setRating(1)}>1sssss</div>
-      <div onClick={() => setRating(2)}>2</div>
-      <div onClick={() => setRating(3)}>3</div>
-      <div onClick={() => setRating(4)}>4</div>
-      <div onClick={() => setRating(5)}>5</div>
+      <EmojiRating>
+        <Image src={AngryFace} onClick={() => setRating(1)}></Image>
+        <Image src={SadFace} onClick={() => setRating(2)}></Image>
+        <Image src={SoSoFace} onClick={() => setRating(3)}></Image>
+        <Image src={HappyFace} onClick={() => setRating(4)}></Image>
+        <Image src={EnjoyFace} onClick={() => setRating(5)}></Image>
+      </EmojiRating>
 
-      <div onClick={() => updateRating(rating)}>Next</div>
-    </div>
+      <Button onClick={() => goToHomePage()}>Back</Button>
+      <Button onClick={() => updateRating(rating)}>Next</Button>
+    </Container>
   )
 }
 export default RatingPage;
