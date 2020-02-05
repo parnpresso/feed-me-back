@@ -1,18 +1,33 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
-const RatingPage = () => {
+const RatingPage = (firebase) => {
+  const history = useHistory();
+  const [rating, setRating] = useState(0);
+
+  const goToSuccessPage = () => history.push("/success");
+
+  const updateRating = (rating) => {
+    try {
+      const feedbacksTable = firebase.firebase.database().ref('feedbacks');
+      feedbacksTable.push({teamwork_rating: rating});
+      goToSuccessPage();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div>
       <h1>Teamwork</h1>
 
-      <div>1</div>
-      <div>2</div>
-      <div>3</div>
-      <div>4</div>
-      <div>5</div>
+      <div onClick={() => setRating(1)}>1sssss</div>
+      <div onClick={() => setRating(2)}>2</div>
+      <div onClick={() => setRating(3)}>3</div>
+      <div onClick={() => setRating(4)}>4</div>
+      <div onClick={() => setRating(5)}>5</div>
 
-      <Link to="/success">Next</Link>
+      <div onClick={() => updateRating(rating)}>Next</div>
     </div>
   )
 }
