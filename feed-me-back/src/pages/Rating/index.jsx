@@ -29,7 +29,9 @@ const Container = styled.div`
 `;
 
 const EmojiRating = styled.div`
+  width: 80vw;
   display: flex;
+  justify-content: space-between;
 `;
 
 const Title = styled.h1`
@@ -38,8 +40,8 @@ const Title = styled.h1`
 `;
 
 const Image = styled.img`
-  width: 60px;
-  height: 60px;
+  width: 55px;
+  height: 55px;
 `;
 
 const Content = styled.p`
@@ -53,7 +55,7 @@ const Content = styled.p`
 const Button = styled.button`
   margin-left: 20px;
   margin-right: 20px;
-  padding: 0.5em 2em 0.5em 2em;
+  padding: 0.5em 1em 0.5em 1em;
   border: none;
   border-radius: 0.3em;
   background: #eaeaea;
@@ -66,7 +68,7 @@ const Button = styled.button`
 const ActiveButton = styled.button`
   margin-left: 20px;
   margin-right: 20px;
-  padding: 0.5em 2em 0.5em 2em;
+  padding: 0.5em 1em 0.5em 1em;
   border: none;
   border-radius: 0.3em;
   background: #FED462;
@@ -85,6 +87,14 @@ const NavigatorBar = styled.div`
   padding-left: 20px;
   padding: 20px;
   background-color: white;
+`;
+
+const NavigatorNumber = styled.div`
+  display: flex;
+  align-items: center;
+  color: #bcbcbc;
+  font-weight: 600;
+  letter-spacing: 1px;
 `;
 
 const RatingPage = (firebase) => {
@@ -165,11 +175,8 @@ const RatingPage = (firebase) => {
       <Title>Teamwork</Title>
 
       <Content>
-        Focused on growth & learning our stack, best practices, and codebase.
-        Works on scoped problems with some guidance, contributing meaningfully.
-        Writes clean code and tests, iterating based on feedback.
-        Participates in code reviews and technical design.
-        May participate in on-call rotation, if applicable for their domain.
+        Works well in a team<br />
+        ทำงานกับทีมได้ดี
       </Content>
 
       <EmojiRating>
@@ -182,6 +189,7 @@ const RatingPage = (firebase) => {
 
       <NavigatorBar>
         <Button onClick={() => goToHomePage()}>BACK</Button>
+        <NavigatorNumber>1/8</NavigatorNumber>
         {rating === 0 ? (
           <Button>NEXT</Button>
         ) : (
