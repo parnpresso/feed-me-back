@@ -19,6 +19,7 @@ import HappyFace from './images/happy-face.png';
 import EnjoyFace from './images/enjoy-face.png';
 
 const Container = styled.div`
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,6 +33,7 @@ const EmojiRating = styled.div`
 `;
 
 const Title = styled.h1`
+  margin-bottom: 20px;
   font-size: 1.8em;
 `;
 
@@ -40,8 +42,31 @@ const Image = styled.img`
   height: 60px;
 `;
 
+const Content = styled.p`
+  margin-bottom: 60px;
+  padding-left: 10%;
+  padding-right: 10%;
+  text-align: center;
+  color: #535c68;
+`;
+
 const Button = styled.button`
-  padding: 0.5em 4em 0.5em 4em;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 0.5em 2em 0.5em 2em;
+  border: none;
+  border-radius: 0.3em;
+  background: #eaeaea;
+  font-size: 1.2em;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #707070;
+`;
+
+const ActiveButton = styled.button`
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 0.5em 2em 0.5em 2em;
   border: none;
   border-radius: 0.3em;
   background: #FED462;
@@ -49,6 +74,17 @@ const Button = styled.button`
   font-weight: 600;
   letter-spacing: 1px;
   color: #202020;
+`;
+
+const NavigatorBar = styled.div`
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding: 20px;
+  background-color: white;
 `;
 
 const RatingPage = (firebase) => {
@@ -128,6 +164,14 @@ const RatingPage = (firebase) => {
     <Container>
       <Title>Teamwork</Title>
 
+      <Content>
+        Focused on growth & learning our stack, best practices, and codebase.
+        Works on scoped problems with some guidance, contributing meaningfully.
+        Writes clean code and tests, iterating based on feedback.
+        Participates in code reviews and technical design.
+        May participate in on-call rotation, if applicable for their domain.
+      </Content>
+
       <EmojiRating>
         <Image src={getAngryFace()} onClick={() => setRating(1)}></Image>
         <Image src={getSadFace()} onClick={() => setRating(2)}></Image>
@@ -136,8 +180,15 @@ const RatingPage = (firebase) => {
         <Image src={getEnjoyFace()} onClick={() => setRating(5)}></Image>
       </EmojiRating>
 
-      <Button onClick={() => goToHomePage()}>Back</Button>
-      <Button onClick={() => updateRating(rating)}>Next</Button>
+      <NavigatorBar>
+        <Button onClick={() => goToHomePage()}>BACK</Button>
+        {rating === 0 ? (
+          <Button>NEXT</Button>
+        ) : (
+          <ActiveButton onClick={() => updateRating(rating)}>NEXT</ActiveButton>
+        )}
+
+      </NavigatorBar>
     </Container>
   )
 }

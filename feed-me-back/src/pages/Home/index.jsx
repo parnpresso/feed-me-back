@@ -13,6 +13,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
+  margin-top: 20px;
   font-size: 1.8em;
 `;
 
@@ -23,6 +24,7 @@ const Image = styled.img`
 `;
 
 const Content = styled.p`
+  margin-bottom: 20px;
   padding-left: 10%;
   padding-right: 10%;
   text-align: center;
