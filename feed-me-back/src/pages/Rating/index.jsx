@@ -2,46 +2,39 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import ActiveAngryFace from './images/active-angry-face.png';
-import ActiveSadFace from './images/active-sad-face.png';
-import ActiveSoSoFace from './images/active-so-so-face.png';
-import ActiveHappyFace from './images/active-happy-face.png';
-import ActiveEnjoyFace from './images/active-enjoy-face.png';
-import AnimateAngryFace from './animations/angry-face.gif';
-import AnimateSadFace from './animations/sad-face.gif';
-import AnimateSoSoFace from './animations/so-so-face.gif';
-import AnimateHappyFace from './animations/happy-face.gif';
-import AnimateEnjoyFace from './animations/enjoy-face.gif';
-import AngryFace from './images/angry-face.png';
-import SadFace from './images/sad-face.png';
-import SoSoFace from './images/so-so-face.png';
-import HappyFace from './images/happy-face.png';
-import EnjoyFace from './images/enjoy-face.png';
+import EmojiRating from '../../components/EmojiRating';
 
 const Container = styled.div`
-  height: 100vh;
+  padding-top: 20vh;
+  height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   background-color: #f8f8f8;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 `;
 
-const EmojiRating = styled.div`
-  width: 80vw;
+const TopBar = styled.div`
+  position: fixed;
+  top: 0;
+  width: 100vw;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  padding-left: 20px;
+  padding: 20px;
+  background-color: white;
+`;
+
+const TopTitle = styled.h1`
+  font-size: 1.2em;
+  letter-spacing: 1px;
+  color: #707070;
 `;
 
 const Title = styled.h1`
   margin-bottom: 20px;
   font-size: 1.8em;
-`;
-
-const Image = styled.img`
-  width: 55px;
-  height: 55px;
 `;
 
 const Content = styled.p`
@@ -50,6 +43,7 @@ const Content = styled.p`
   padding-right: 10%;
   text-align: center;
   color: #535c68;
+  letter-spacing: 0.5px;
 `;
 
 const Button = styled.button`
@@ -120,72 +114,29 @@ const RatingPage = (firebase) => {
     }
   };
 
-  const getAngryFace = () => {
-    if (rating === 1 && isAnimate) {
-      return AnimateAngryFace;
-    }
-    if (rating === 1) {
-      return ActiveAngryFace;
-    }
-    return AngryFace;
-  };
-
-  const getSadFace = () => {
-    if (rating === 2 && isAnimate) {
-      return AnimateSadFace;
-    }
-    if (rating === 2) {
-      return ActiveSadFace;
-    }
-    return SadFace;
-  };
-
-  const getSoSoFace = () => {
-    if (rating === 3 && isAnimate) {
-      return AnimateSoSoFace;
-    }
-    if (rating === 3) {
-      return ActiveSoSoFace;
-    }
-    return SoSoFace;
-  };
-
-  const getHappyFace = () => {
-    if (rating === 4 && isAnimate) {
-      return AnimateHappyFace;
-    }
-    if (rating === 4) {
-      return ActiveHappyFace;
-    }
-    return HappyFace;
-  };
-
-  const getEnjoyFace = () => {
-    if (rating === 5 && isAnimate) {
-      return AnimateEnjoyFace;
-    }
-    if (rating === 5) {
-      return ActiveEnjoyFace;
-    }
-    return EnjoyFace;
-  };
-
   return (
     <Container>
-      <Title>Teamwork</Title>
+      <TopBar>
+        <TopTitle>🛠 Technical</TopTitle>
+      </TopBar>
+
+      <Title>Codebase</Title>
 
       <Content>
-        Works well in a team<br />
-        ทำงานกับทีมได้ดี
+        Focused on growth & learning our stack, best practices, and codebase.
+
+        {/* Works on scoped problems with some guidance, contributing meaningfully.<br /><br />
+        Writes clean code and tests, iterating based on feedback.<br /><br />
+        Participates in code reviews and technical design.<br /><br />
+        May participate in on-call rotation, if applicable for their domain.<br /><br />
+        ทำงานกับทีมได้ดี */}
       </Content>
 
-      <EmojiRating>
-        <Image src={getAngryFace()} onClick={() => setRating(1)}></Image>
-        <Image src={getSadFace()} onClick={() => setRating(2)}></Image>
-        <Image src={getSoSoFace()} onClick={() => setRating(3)}></Image>
-        <Image src={getHappyFace()} onClick={() => setRating(4)}></Image>
-        <Image src={getEnjoyFace()} onClick={() => setRating(5)}></Image>
-      </EmojiRating>
+      <EmojiRating
+        rating={rating}
+        setRating={setRating}
+        isAnimate={isAnimate}
+      />
 
       <NavigatorBar>
         <Button onClick={() => goToHomePage()}>BACK</Button>
