@@ -5,12 +5,11 @@ import styled from 'styled-components';
 import EmojiRating from '../../components/EmojiRating';
 
 const Container = styled.div`
-  padding-top: 20vh;
+  padding-top: 15vh;
   height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
   background-color: #f8f8f8;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 `;
@@ -91,6 +90,31 @@ const NavigatorNumber = styled.div`
   letter-spacing: 1px;
 `;
 
+const AdditionalFeedback = styled.div`
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const AdditionalFeedbackInput = styled.textarea`
+  width: 80%;
+  border-radius: 6px;
+  border: none;
+  padding: 20px;
+  font-size: 16px;
+`;
+
+const AddtionalFeedbackLink = styled.p`
+  margin-top: 60px;
+  margin-bottom: 20px;
+  padding-left: 10%;
+  padding-right: 10%;
+  text-align: center;
+  color: #535c68;
+  letter-spacing: 0.5px;
+`;
+
 const RatingPage = (firebase) => {
   const history = useHistory();
   const [rating, setRating] = useState(0);
@@ -137,6 +161,13 @@ const RatingPage = (firebase) => {
         setRating={setRating}
         isAnimate={isAnimate}
       />
+
+      {rating !== 0 && (
+        <AdditionalFeedback>
+          <AddtionalFeedbackLink>บอกให้ป่านรู้ทำไมถึงเลือกแบบนี้</AddtionalFeedbackLink>
+          <AdditionalFeedbackInput rows="5" placeholder="Optional" />
+        </AdditionalFeedback>
+      )}
 
       <NavigatorBar>
         <Button onClick={() => goToHomePage()}>BACK</Button>
