@@ -118,7 +118,7 @@ const AddtionalFeedbackLink = styled.p`
 
 const RatingPage = (firebase) => {
   const history = useHistory();
-  const [questions, setQuestion] = useState(originalQuestions);
+  const [questions, setQuestions] = useState(originalQuestions);
   const [currentQuestionNumber, setCurrentQuestionNumber] = useState(1);
   const [rating, setRating] = useState(0);
   const [isAnimate, setIsAnimate] = useState(false);
@@ -169,6 +169,11 @@ const RatingPage = (firebase) => {
     window.scrollTo(0, 0);
   };
 
+  const setAdditionalFeedback = additionalFeedbackValue => {
+    questions[currentQuestionNumber - 1].additionalFeedback = additionalFeedbackValue;
+    setQuestions(questions);
+  };
+
   return (
     <Container>
       <TopBar>
@@ -190,7 +195,11 @@ const RatingPage = (firebase) => {
       {rating !== 0 && (
         <AdditionalFeedback>
           <AddtionalFeedbackLink>บอกให้ป่านรู้ทำไมถึงเลือกแบบนี้</AddtionalFeedbackLink>
-          <AdditionalFeedbackInput rows="5" placeholder="Optional" />
+          <AdditionalFeedbackInput
+            rows="5"
+            placeholder="Optional"
+            onChange={event => setAdditionalFeedback(event.target.value)}
+          />
         </AdditionalFeedback>
       )}
 
