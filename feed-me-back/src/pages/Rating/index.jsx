@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import questions from '../../constants/questions';
+import originalQuestions from '../../constants/questions';
 import EmojiRating from '../../components/EmojiRating';
 
 const Container = styled.div`
@@ -118,37 +118,55 @@ const AddtionalFeedbackLink = styled.p`
 
 const RatingPage = (firebase) => {
   const history = useHistory();
-  const [answers, setAnswers] = useState({});
+  const [questions, setQuestion] = useState(originalQuestions);
   const [currentQuestionNumber, setCurrentQuestionNumber] = useState(1);
   const [rating, setRating] = useState(0);
   const [isAnimate, setIsAnimate] = useState(false);
 
-  // useEffect(() => {
-  //   setAnswers(questions[currentQuestion]);
-  // }, [currentQuestion]);
+  useEffect(() => {
+    questions.map(question => {
+      question.rating = '';
+      question.additionalFeedback = '';
+    });
+  }, []);
 
   useEffect(() => {
     setIsAnimate(true);
     setTimeout(() => {setIsAnimate(false)}, 3000);
   }, [rating]);
 
-  const goToHomePage = () => history.push("/");
-  const goToSuccessPage = () => history.push("/success");
+  const clickBackButton = ()=> {
+    if (currentQuestionNumber === 1) { history.push("/"); }
+    else { goToPreviousQuestion(); }
+  };
 
-  const updateRating = (rating) => {
-    try {
-      const feedbacksTable = firebase.firebase.database().ref('feedbacks');
-      feedbacksTable.push({teamwork_rating: rating});
-      goToNextQuestion();
-    } catch (error) {
-      console.log(error);
+  const goToPreviousQuestion = () => {
+    setCurrentQuestionNumber(currentQuestionNumber - 1);
+    resetRatingPage();
+  };
+
+  const clickNextButton = (currentQuestionNumber) => {
+    if (currentQuestionNumber === questions.lenght) { history.push("/success"); }
+    else {
+      try {
+        const feedbacksTable = firebase.firebase.database().ref('feedbacks');
+        feedbacksTable.push({teamwork_rating: rating});
+        goToNextQuestion();
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
   const goToNextQuestion = () => {
     setCurrentQuestionNumber(currentQuestionNumber + 1);
+    resetRatingPage();
+  };
+
+  const resetRatingPage = () => {
     setRating(0);
     setIsAnimate(false);
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -177,14 +195,14 @@ const RatingPage = (firebase) => {
       )}
 
       <NavigatorBar>
-        <Button onClick={() => goToHomePage()}>BACK</Button>
-      <NavigatorNumber>{ currentQuestionNumber }/{ questions.length }</NavigatorNumber>
+        <Button onClick={() => clickBackButton(currentQuestionNumber)}>BACK</Button>
+        <NavigatorNumber>{ currentQuestionNumber }/{ questions.length }</NavigatorNumber>
+
         {rating === 0 ? (
           <Button>NEXT</Button>
         ) : (
-          <ActiveButton onClick={() => updateRating(rating)}>NEXT</ActiveButton>
+          <ActiveButton onClick={() => clickNextButton(rating)}>NEXT</ActiveButton>
         )}
-
       </NavigatorBar>
     </Container>
   )
