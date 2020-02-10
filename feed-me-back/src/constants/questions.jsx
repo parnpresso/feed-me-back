@@ -113,6 +113,33 @@ export default [
     description: 'Objectively evaluates whether they\'ve met their goals.',
     category: 'Maturity',
   },
+  {
+    order: 20,
+    title: '',
+    description: 'Parn contributes to his ability to do his job well',
+    category: 'Overview',
+  },
+  {
+    order: 21,
+    title: 'Goal',
+    description: 'Things Parn does well.',
+    category: 'Overview',
+    showRating: false,
+  },
+  {
+    order: 22,
+    title: 'Goal',
+    description: 'Things Parn could improve',
+    category: 'Overview',
+    showRating: false,
+  },
+  {
+    order: 23,
+    title: 'Goal',
+    description: 'Say something to Parn',
+    category: 'Overview',
+    showRating: false,
+  },
 ];
 
 
