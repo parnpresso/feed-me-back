@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
+import questions from '../../constants/questions';
 import EmojiRating from '../../components/EmojiRating';
 
 const Container = styled.div`
@@ -117,8 +118,14 @@ const AddtionalFeedbackLink = styled.p`
 
 const RatingPage = (firebase) => {
   const history = useHistory();
+  const [answers, setAnswers] = useState({});
+  const [currentQuestionNumber, setCurrentQuestionNumber] = useState(1);
   const [rating, setRating] = useState(0);
   const [isAnimate, setIsAnimate] = useState(false);
+
+  // useEffect(() => {
+  //   setAnswers(questions[currentQuestion]);
+  // }, [currentQuestion]);
 
   useEffect(() => {
     setIsAnimate(true);
@@ -132,28 +139,28 @@ const RatingPage = (firebase) => {
     try {
       const feedbacksTable = firebase.firebase.database().ref('feedbacks');
       feedbacksTable.push({teamwork_rating: rating});
-      goToSuccessPage();
+      goToNextQuestion();
     } catch (error) {
       console.log(error);
     }
   };
 
+  const goToNextQuestion = () => {
+    setCurrentQuestionNumber(currentQuestionNumber + 1);
+    setRating(0);
+    setIsAnimate(false);
+  };
+
   return (
     <Container>
       <TopBar>
-        <TopTitle>🛠 Technical</TopTitle>
+        <TopTitle>{ questions[currentQuestionNumber].category }</TopTitle>
       </TopBar>
 
-      <Title>Codebase</Title>
+      <Title>{ questions[currentQuestionNumber].title }</Title>
 
       <Content>
-        Focused on growth & learning our stack, best practices, and codebase.
-
-        {/* Works on scoped problems with some guidance, contributing meaningfully.<br /><br />
-        Writes clean code and tests, iterating based on feedback.<br /><br />
-        Participates in code reviews and technical design.<br /><br />
-        May participate in on-call rotation, if applicable for their domain.<br /><br />
-        ทำงานกับทีมได้ดี */}
+        { questions[currentQuestionNumber].description }
       </Content>
 
       <EmojiRating
@@ -171,7 +178,7 @@ const RatingPage = (firebase) => {
 
       <NavigatorBar>
         <Button onClick={() => goToHomePage()}>BACK</Button>
-        <NavigatorNumber>1/8</NavigatorNumber>
+      <NavigatorNumber>{ currentQuestionNumber }/{ questions.length }</NavigatorNumber>
         {rating === 0 ? (
           <Button>NEXT</Button>
         ) : (
